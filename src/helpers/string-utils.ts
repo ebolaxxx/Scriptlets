@@ -59,6 +59,46 @@ export const toRegExp = (input: RawStrPattern = ''): RegExp => {
     if (input === '') {
         return new RegExp(DEFAULT_VALUE);
     }
+
+    const delimiterIndex = input.lastIndexOf(FORWARD_SLASH);
+    const flagsPart = input.substring(delimiterIndex + 1);
+    const regExpPart = input.substring(0, delimiterIndex + 1);
+
+    const isValidRegExpFlag = (flag: string): boolean => {
+        if (!flag) {
+            return false;
+        }
+        try {
+            // eslint-disable-next-line no-new
+            new RegExp('', flag);
+            return true;
+        } catch (ex) {
+            return false;
+        }
+    };
+
+    const regExpHasFlags = (text: string): boolean => {
+        if (
+            text.startsWith(FORWARD_SLASH)
+            // Check if there are 2 slashes at least
+            && text.split(FORWARD_SLASH).length - 1 >= 2
+            && flagsPart.match(/[a-zA-Z]$/)
+        ) {
+            return true;
+        }
+        return false;
+    };
+
+    const getRegExpFlags = (flags: string): string => {
+        return isValidRegExpFlag(flags) ? flagsPart : '';
+    };
+
+    const flags = regExpHasFlags(input) ? getRegExpFlags(flagsPart) : '';
+
+    if (flags) {
+        return new RegExp(regExpPart.slice(1, -1), flags);
+    }
+
     if (input[0] === FORWARD_SLASH && input[input.length - 1] === FORWARD_SLASH) {
         return new RegExp(input.slice(1, -1));
     }

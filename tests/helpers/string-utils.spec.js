@@ -28,6 +28,60 @@ describe('Test inferValue', () => {
         });
     });
 
+    describe('Test toRegExp with flag', () => {
+        const DEFAULT_VALUE = '.?';
+        const defaultRegexp = new RegExp(DEFAULT_VALUE);
+
+        const testCases = [
+            {
+                actual: '/qwerty/g',
+                expected: /qwerty/g,
+            },
+            {
+                actual: '/[a-z]{1,9}/gm',
+                expected: /[a-z]{1,9}/gm,
+            },
+            {
+                actual: '',
+                expected: defaultRegexp,
+            },
+            {
+                actual: undefined,
+                expected: defaultRegexp,
+            },
+        ];
+        test.each(testCases)('"$actual"', ({ actual, expected }) => {
+            expect(toRegExp(actual)).toStrictEqual(expected);
+        });
+    });
+
+    describe('Test toRegExp with not a valid flag', () => {
+        const DEFAULT_VALUE = '.?';
+        const defaultRegexp = new RegExp(DEFAULT_VALUE);
+
+        const testCases = [
+            {
+                actual: 'qwerty/g',
+                expected: /qwerty\/g/,
+            },
+            {
+                actual: '/asdf/gmtest',
+                expected: /\/asdf\/gmtest/,
+            },
+            {
+                actual: '',
+                expected: defaultRegexp,
+            },
+            {
+                actual: undefined,
+                expected: defaultRegexp,
+            },
+        ];
+        test.each(testCases)('"$actual"', ({ actual, expected }) => {
+            expect(toRegExp(actual)).toStrictEqual(expected);
+        });
+    });
+
     describe('Test toRegExp for invalid inputs', () => {
         const invalidRegexpPatterns = [
             '/\\/',
