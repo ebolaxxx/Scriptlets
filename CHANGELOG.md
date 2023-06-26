@@ -187,6 +187,7 @@ prevent inline `onerror` and match `link` tag [#276](https://github.com/AdguardT
     - `googlesyndication-adsbygoogle` [#252](https://github.com/AdguardTeam/Scriptlets/issues/252)
 
 
+[Unreleased]: https://github.com/AdguardTeam/Scriptlets/compare/v1.9.37...HEAD
 [v1.9.37]: https://github.com/AdguardTeam/Scriptlets/compare/v1.9.7...v1.9.37
 [v1.9.7]: https://github.com/AdguardTeam/Scriptlets/compare/v1.9.1...v1.9.7
 [v1.9.1]: https://github.com/AdguardTeam/Scriptlets/compare/v1.8.2...v1.9.1
