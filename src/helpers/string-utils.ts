@@ -69,7 +69,7 @@ export const toRegExp = (input: RawStrPattern = ''): RegExp => {
      * Checks whether the string is a valid regexp flag
      *
      * @param flag string
-     * @returns boolean
+     * @returns boolean, true in case if regexp flag is valid
      */
     const isValidRegExpFlag = (flag: string): boolean => {
         if (!flag) {
@@ -87,15 +87,19 @@ export const toRegExp = (input: RawStrPattern = ''): RegExp => {
     /**
      * Checks whether the text string contains regexp flags
      *
-     * @param text string
-     * @returns boolean
+     * @param textRegeExp string
+     * @param textFlags textFlags
+     * @returns boolean, true if regexp contains flags
      */
-    const hasRegExpFlags = (text: string): boolean => {
+    const hasRegExpFlags = (textRegeExp: string, textFlags: string): boolean => {
         if (
-            text.startsWith(FORWARD_SLASH)
-            // Check if there are 2 slashes at least
-            && text.split(FORWARD_SLASH).length - 1 >= 2
-            && flagsPart.match(/[a-zA-Z]$/)
+            textFlags
+            && textRegeExp.startsWith(FORWARD_SLASH)
+            && textRegeExp.endsWith(FORWARD_SLASH)
+            // Not a correct regex if ends with '\\/'
+            && !textRegeExp.endsWith('\\/')
+            // Only valid flags - dgimsuvy
+            && textFlags.match(/[dgimsuvyDGIMSUVY]$/)
         ) {
             return true;
         }
@@ -104,7 +108,7 @@ export const toRegExp = (input: RawStrPattern = ''): RegExp => {
 
     /**
      * Returns the regexp flags as a string
-     * or empty string in case if flag is not valid
+     * or empty string if flag is not valid
      *
      * @param flags string
      * @returns string
@@ -113,7 +117,7 @@ export const toRegExp = (input: RawStrPattern = ''): RegExp => {
         return isValidRegExpFlag(flags) ? flagsPart : '';
     };
 
-    const flags = hasRegExpFlags(input) ? getRegExpFlags(flagsPart) : '';
+    const flags = hasRegExpFlags(regExpPart, flagsPart) ? getRegExpFlags(flagsPart) : '';
 
     if ((input[0] === FORWARD_SLASH && input[input.length - 1] === FORWARD_SLASH) || flags) {
         const regExpInput = flags ? regExpPart : input;

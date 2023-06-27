@@ -69,6 +69,14 @@ describe('Test inferValue', () => {
                 expected: /\/asdf\/gmtest/,
             },
             {
+                actual: '/qwert/ggm',
+                expected: /\/qwert\/ggm/,
+            },
+            {
+                actual: '/test\\/g',
+                expected: /\/test\\\/g/,
+            },
+            {
                 actual: '',
                 expected: defaultRegexp,
             },
