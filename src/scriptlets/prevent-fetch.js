@@ -170,6 +170,7 @@ export function preventFetch(source, propsToMatch, responseBody = 'emptyObj', re
                     },
                 );
             } catch (ex) {
+                // https://github.com/AdguardTeam/Scriptlets/issues/334
                 return noopPromiseResolve(strResponseBody, fetchData.url, responseType);
             }
         }
