@@ -1,6 +1,6 @@
 import { toRegExp, inferValue } from '../../src/helpers';
 
-describe('Test inferValue', () => {
+describe('Test string utils', () => {
     describe('Test toRegExp for valid inputs', () => {
         const DEFAULT_VALUE = '.?';
         const defaultRegexp = new RegExp(DEFAULT_VALUE);

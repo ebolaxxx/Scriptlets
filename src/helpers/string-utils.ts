@@ -85,39 +85,27 @@ export const toRegExp = (input: RawStrPattern = ''): RegExp => {
     };
 
     /**
-     * Checks whether the text string contains regexp flags
+     * Checks whether the text string contains valid regexp flags
      *
-     * @param textRegeExp string
-     * @param textFlags textFlags
-     * @returns boolean, true if regexp contains flags
+     * @param regExpStr string
+     * @param flagsStr string
+     * @returns string, flagsStr if flag is valid, otherwise empty string
      */
-    const hasRegExpFlags = (textRegeExp: string, textFlags: string): boolean => {
+    const hasRegExpFlags = (regExpStr: string, flagsStr: string): string => {
         if (
-            textFlags
-            && textRegeExp.startsWith(FORWARD_SLASH)
-            && textRegeExp.endsWith(FORWARD_SLASH)
+            flagsStr
+            && regExpStr.startsWith(FORWARD_SLASH)
+            && regExpStr.endsWith(FORWARD_SLASH)
             // Not a correct regex if ends with '\\/'
-            && !textRegeExp.endsWith('\\/')
-            // Only valid flags - dgimsuvy
-            && textFlags.match(/[dgimsuvyDGIMSUVY]$/)
+            && !regExpStr.endsWith('\\/')
+            && isValidRegExpFlag(flagsStr)
         ) {
-            return true;
+            return flagsStr;
         }
-        return false;
+        return '';
     };
 
-    /**
-     * Returns the regexp flags as a string
-     * or empty string if flag is not valid
-     *
-     * @param flags string
-     * @returns string
-     */
-    const getRegExpFlags = (flags: string): string => {
-        return isValidRegExpFlag(flags) ? flagsPart : '';
-    };
-
-    const flags = hasRegExpFlags(regExpPart, flagsPart) ? getRegExpFlags(flagsPart) : '';
+    const flags = hasRegExpFlags(regExpPart, flagsPart);
 
     if ((input[0] === FORWARD_SLASH && input[input.length - 1] === FORWARD_SLASH) || flags) {
         const regExpInput = flags ? regExpPart : input;
