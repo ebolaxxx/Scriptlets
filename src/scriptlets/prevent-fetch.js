@@ -159,6 +159,9 @@ export function preventFetch(source, propsToMatch, responseBody = 'emptyObj', re
             hit(source);
             try {
                 const origResponse = await Reflect.apply(target, thisArg, args);
+                // In the case of apps, the blocked request has status 500
+                // and no error is thrown, so it's necessary to check response.ok
+                // https://github.com/AdguardTeam/Scriptlets/issues/334
                 if (!origResponse.ok) {
                     return noopPromiseResolve(strResponseBody, fetchData.url, responseType);
                 }

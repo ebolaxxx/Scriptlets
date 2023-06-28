@@ -155,6 +155,7 @@ if (!isSupported) {
             assert.strictEqual(response.ok, true, 'Request blocked');
             done();
         }
+        assert.ok(response.url.includes('/blocked_request.json'), 'Response URL is mocked');
         assert.ok(isEmptyObject(parsedData), 'Response is mocked');
         assert.strictEqual(window.hit, 'FIRED', 'hit function fired');
         done();
