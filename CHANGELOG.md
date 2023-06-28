@@ -11,7 +11,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
-- issue with `prevent-fetch` and `prevent-xhr` scriptlets [#334](https://github.com/AdguardTeam/Scriptlets/issues/334)
+- error throwing in `prevent-fetch` and `prevent-xhr` scriptlets when a request is blocked
+  [#334](https://github.com/AdguardTeam/Scriptlets/issues/334)
 
 ## <a name="v1.9.37"></a> [v1.9.37] - 2023-06-06
 
