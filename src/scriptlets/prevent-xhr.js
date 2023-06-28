@@ -193,7 +193,7 @@ export function preventXHR(source, propsToMatch, customResponseText) {
                 // original values
                 readyState: { value: readyState, writable: false },
                 statusText: { value: statusText, writable: false },
-                // If request is blocked by extension, then responseURL is an empty string
+                // If the request is blocked, responseURL is an empty string
                 responseURL: { value: responseURL || xhrData.url, writable: false },
                 responseXML: { value: responseXML, writable: false },
                 // modified values
