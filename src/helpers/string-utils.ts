@@ -52,7 +52,6 @@ export const escapeRegExp = (str: string): string => str.replace(/[.*+?^${}()|[\
  *
  * @param input literal string or regexp pattern; defaults to '' (empty string)
  * @returns regular expression; defaults to /.?/
- * @throws Throw an error for invalid regex pattern
  */
 export const toRegExp = (input: RawStrPattern = ''): RegExp => {
     const DEFAULT_VALUE = '.?';
@@ -69,7 +68,7 @@ export const toRegExp = (input: RawStrPattern = ''): RegExp => {
      * Checks whether the string is a valid regexp flag
      *
      * @param flag string
-     * @returns boolean, true in case if regexp flag is valid
+     * @returns True if regexp flag is valid, otherwise false.
      */
     const isValidRegExpFlag = (flag: string): boolean => {
         if (!flag) {
@@ -85,16 +84,16 @@ export const toRegExp = (input: RawStrPattern = ''): RegExp => {
     };
 
     /**
-     * Checks whether the text string contains valid regexp flags
+     * Checks whether the text string contains valid regexp flags,
+     * and returns `flagsStr` if valid, otherwise empty string.
      *
      * @param regExpStr string
      * @param flagsStr string
-     * @returns string, flagsStr if flag is valid, otherwise empty string
+     * @returns `flagsStr` if it is valid, otherwise empty string.
      */
-    const hasRegExpFlags = (regExpStr: string, flagsStr: string): string => {
+    const getRegExpFlags = (regExpStr: string, flagsStr: string): string => {
         if (
-            flagsStr
-            && regExpStr.startsWith(FORWARD_SLASH)
+            regExpStr.startsWith(FORWARD_SLASH)
             && regExpStr.endsWith(FORWARD_SLASH)
             // Not a correct regex if ends with '\\/'
             && !regExpStr.endsWith('\\/')
@@ -105,9 +104,9 @@ export const toRegExp = (input: RawStrPattern = ''): RegExp => {
         return '';
     };
 
-    const flags = hasRegExpFlags(regExpPart, flagsPart);
+    const flags = getRegExpFlags(regExpPart, flagsPart);
 
-    if ((input[0] === FORWARD_SLASH && input[input.length - 1] === FORWARD_SLASH) || flags) {
+    if ((input.startsWith(FORWARD_SLASH) && input.endsWith(FORWARD_SLASH)) || flags) {
         const regExpInput = flags ? regExpPart : input;
         return new RegExp(regExpInput.slice(1, -1), flags);
     }

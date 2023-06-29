@@ -61,6 +61,10 @@ describe('Test string utils', () => {
 
         const testCases = [
             {
+                actual: 'g',
+                expected: /g/,
+            },
+            {
                 actual: 'qwerty/g',
                 expected: /qwerty\/g/,
             },
